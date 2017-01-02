@@ -16,7 +16,7 @@ struct MockGenericPasswordItem: KeychainGenericPasswordType {
     
     var dataToStore: [String: AnyObject] {
         
-        return ["token": "123456"]
+        return ["token": "123456" as AnyObject]
     }
     
     init(accountName: String) {

@@ -20,7 +20,7 @@ struct MockKeychainItem: KeychainItemType {
     
     var dataToStore: [String: AnyObject] {
         
-        return ["token": "123456"]
+        return ["token": "123456" as AnyObject]
     }
 }
 
@@ -30,23 +30,23 @@ class MockKeychain: KeychainServiceType {
     var isRemoveCalled = false
     var isFetchCalled = false
     
-    func insertItemWithAttributes(attributes: [String: AnyObject]) throws {
+    func insertItemWithAttributes(_ attributes: [String: AnyObject]) throws {
         
         isInsertCalled = true
     }
     
-    func removeItemWithAttributes(attributes: [String: AnyObject]) throws {
+    func removeItemWithAttributes(_ attributes: [String: AnyObject]) throws {
         
         isRemoveCalled = true
     }
     
-    func fetchItemWithAttributes(attributes: [String: AnyObject]) throws -> [String: AnyObject]? {
+    func fetchItemWithAttributes(_ attributes: [String: AnyObject]) throws -> [String: AnyObject]? {
         
         isFetchCalled = true
         
-        let data = NSKeyedArchiver.archivedDataWithRootObject(["token": "123456"])
+        let data = NSKeyedArchiver.archivedData(withRootObject: ["token": "123456"])
         
-        return [String(kSecValueData): data]
+        return [String(kSecValueData): data as AnyObject]
     }
 }
 
@@ -64,12 +64,12 @@ class KeychainItemTypeExtensionsTests: XCTestCase {
         let item = MockKeychainItem()
         
         let expectedSecClass = String(kSecClassGenericPassword)
-        let expectedData = NSKeyedArchiver.archivedDataWithRootObject(["token": "123456"])
+        let expectedData = NSKeyedArchiver.archivedData(withRootObject: ["token": "123456"])
         
         let attriburesToSave = item.attributesToSave
         
         let secClass = attriburesToSave[String(kSecClass)] as? String ?? ""
-        let secValueData = attriburesToSave[String(kSecValueData)] as? NSData ?? NSData()
+        let secValueData = attriburesToSave[String(kSecValueData)] as? Data ?? Data()
         
         XCTAssertEqual(secClass, expectedSecClass, "Should contain the returned attributes")
         XCTAssertEqual(secValueData, expectedData, "Should contain the key data")
@@ -102,7 +102,7 @@ class KeychainItemTypeExtensionsTests: XCTestCase {
     func testDataFromAttributesWillReturnNilWhenDataIsNotDictionary() {
         
         let item = MockKeychainItem()
-        let itemData = NSKeyedArchiver.archivedDataWithRootObject(["a"])
+        let itemData = NSKeyedArchiver.archivedData(withRootObject: ["a"])
         let attributes = [String(kSecValueData): itemData]
         let data = item.dataFromAttributes(attributes)
         

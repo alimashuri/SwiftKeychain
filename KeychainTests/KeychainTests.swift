@@ -13,7 +13,7 @@ class KeychainTests: XCTestCase {
     
     func testErrorForStatusCode() {
         
-        let keychain = Keychain()
+        let keychain = Keychain
         
         let expectedErrorCode = Int(errSecItemNotFound)
         let error = keychain.errorForStatusCode(errSecItemNotFound)
@@ -24,7 +24,7 @@ class KeychainTests: XCTestCase {
     func testInsertItemWithAttributes() {
         
         let item = MockGenericPasswordItem(accountName: "John")
-        let keychain = Keychain()
+        let keychain = Keychain
         var hasError = false
         
         do {
@@ -42,7 +42,7 @@ class KeychainTests: XCTestCase {
     func testInsertItemWithAttributesThrowsError() {
         
         let attributes = ["a": "b"]
-        let keychain = Keychain()
+        let keychain = Keychain
         var hasError = false
         
         do {
@@ -60,7 +60,7 @@ class KeychainTests: XCTestCase {
     func testRemoveItemWithAttributes() {
         
         let item = MockGenericPasswordItem(accountName: "John")
-        let keychain = Keychain()
+        let keychain = Keychain
         var hasError = false
         
         try! keychain.insertItemWithAttributes(item.attributes)
@@ -80,7 +80,7 @@ class KeychainTests: XCTestCase {
     func testRemoveItemWithAttributesThrowsError() {
         
         let attributes = ["a": "b"]
-        let keychain = Keychain()
+        let keychain = Keychain
         var hasError = false
         
         do {
@@ -98,7 +98,7 @@ class KeychainTests: XCTestCase {
     func testFetchItemWithAttributes() {
         
         let item = MockGenericPasswordItem(accountName: "John")
-        let keychain = Keychain()
+        let keychain = Keychain
         var hasError = false
         var fetchedToken = ""
         
@@ -126,7 +126,7 @@ class KeychainTests: XCTestCase {
     func testFetchItemWithAttributesThrowsError() {
         
         let attributes = ["a": "b"]
-        let keychain = Keychain()
+        let keychain = Keychain
         var hasError = false
         
         do {
@@ -144,7 +144,7 @@ class KeychainTests: XCTestCase {
     func testFetchItemWithAttributesReturnsNilIfResultIsNotADictionary() {
         
         let item = MockGenericPasswordItem(accountName: "John")
-        let keychain = Keychain()
+        let keychain = Keychain
         
         try! keychain.insertItemWithAttributes(item.attributes)
         
